@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+
+  <!-- Set the Character set for the page -->
+  <meta charset="utf-8">
+
+  <!-- Let the page adapt to client device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Link to external resource (css, search, etc.) -->
+  <!-- Link to Bootstrap CSS in this case -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <title>Song Directory</title>
+
+  <style>
+	    body {
+			background-color: #d1f2c2;
+			font-family: Arial, sans-serif;
+			color: #333;
+			font-size: 16px;
+		}
+
+        h3 {
+            text-align: center;
+        }
+
+        hr {
+            margin: 20px 0;
+            border: 0;
+            border-top: 1px solid #ccc;
+        }
+
+        .container {
+			background-color: white;
+			text-align: center;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+		}
+
+        .song-artist {
+            font-weight: bold;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .song-title {
+            font-size: 27px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .song-lyrics {
+            white-space: pre-wrap;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="song-artist" th:text="${song.artist}"></div>
+  <hr>
+  <div class="song-title" th:text="${song.title}"></div>
+  <div class="song-lyrics" id="lyrics" th:text="${song.lyrics}"></div>
+  <ul id="queryList" style="display:none">
+    <li th:each="query : ${queryList}" th:text="${query}"></li>
+  </ul>
+  <a href="#" class="back-link" onclick="window.history.back()">Back to the list</a>
+
+</div>
+
+<script>
+	    var queryList = Array.from(document.querySelectorAll('#queryList li')).map(function(el) {
+	    	  return el.textContent.trim();
+	    	});
+
+
+	    console.log(queryList.length); // Output: [value1, value2, value3, ...]
+
+        var lyrics = document.getElementById("lyrics");
+        var lyricsText = lyrics.innerHTML;
+
+        for (var i = 0; i < queryList.length; i++) {
+            var query = queryList[i];
+            var regex = new RegExp("\\b" + query + "\\b", "gi");
+            lyricsText = lyricsText.replace(regex, "<strong>$&</strong>");
+        }
+
+        lyrics.innerHTML = lyricsText;
+    </script>
+</body>
+</html>

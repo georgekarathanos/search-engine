@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+
+  <!-- Set the Character set for the page -->
+  <meta charset="utf-8">
+
+  <!-- Let the page adapt to client device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Link to external resource (css, search, etc.) -->
+  <!-- Link to Bootstrap CSS in this case -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <title>Songs Directory</title>
+</head>
+
+<body>
+
+<div class="container" style="text-align: center;">
+
+  <style>
+	body {
+	        font-family: Arial, sans-serif;
+	        color: #333;
+	        font-size: 16px;
+	}
+	</style>
+
+  <h3>Songs Directory</h3>
+  <hr>
+
+  <table class="table table-bordered table-striped">
+    <thead style="background-color: #52ab6a;">
+    <tr>
+      <th style="color: #fff;">Artist's Name</th>
+      <th style="color: #fff;">Title</th>
+      <th style="color: #fff;"> </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <th:block th:if="${#lists.isEmpty(songs)}">
+      <tr>
+        <td colspan="3" th:text="'No songs found.'"></td>
+      </tr>
+    </th:block>
+    <th:block th:unless="${#lists.isEmpty(songs)}">
+      <tr th:each="tempSong, songIndex : ${songs}" class="song-row">
+        <td th:text="${tempSong.artist}" />
+        <td th:text="${tempSong.title}" />
+        <td>
+          <!-- Add "view" button/link -->
+          <a th:href="@{/viewSong(artist=${tempSong.artist}, title=${tempSong.title}, lyrics=${tempSong.lyrics}, query=${query})}"
+             class="btn btn-info btn-sm">
+            View Song
+          </a>
+        </td>
+      </tr>
+    </th:block>
+    </tbody>
+
+  </table>
+
+  <div id="pagination-buttons">
+    <button id="prev-button" disabled style="background-color: #52ab6a; color: #fff; border-radius: 5px; padding: 10px; cursor: pointer;"><- Show Previous</button>&nbsp;&nbsp;
+    <button id="next-button" style="background-color: #52ab6a; color: #fff; border-radius: 5px; padding: 10px; cursor: pointer;">Show Next 10 -></button>
+  </div>
+
+  <a th:href="@{/index}">Go back to Google Homepage</a>
+
+</div>
+
+<script>
+	var songRows = document.querySelectorAll('.song-row');
+	var prevButton = document.getElementById('prev-button');
+	var nextButton = document.getElementById('next-button');
+
+	var currentIndex = 0;
+	var pageSize = 10;
+	var totalPages = Math.ceil(songRows.length / pageSize);
+
+	function showPage(pageIndex) {
+		// Hide all rows
+		for (var i = 0; i < songRows.length; i++) {
+			songRows[i].style.display = 'none';
+		}
+
+		// Show rows for the current page
+		var startIndex = pageIndex * pageSize;
+		var endIndex = startIndex + pageSize;
+		for (var i = startIndex; i < endIndex && i < songRows.length; i++) {
+			songRows[i].style.display = '';
+		}
+
+		// Update current index and pagination buttons
+		currentIndex = pageIndex;
+		prevButton.disabled = (currentIndex == 0);
+		nextButton.disabled = (currentIndex == totalPages - 1);
+	}
+
+	showPage(currentIndex);
+
+	prevButton.addEventListener('click', function() {
+		showPage(currentIndex - 1);
+	});
+
+	nextButton.addEventListener('click', function() {
+		showPage(currentIndex + 1);
+	});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Google</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+		}
+
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 30px;
+		}
+
+		form {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
+		input[type="search"] {
+			flex: 1 1 60%;
+			height: 40px;
+			padding: 0 10px;
+			border: none;
+			border-radius: 5px 0 0 5px;
+			background-color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+		}
+
+		select[name="field"], select[name="booleanFlag"], select[name="sortFlag"], select[name="mlFlag"] {
+			flex: 1 1 auto;
+			height: 40px;
+			padding: 0 10px;
+			border: none;
+			border-radius: 0 5px 5px 0;
+			background-color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+		}
+
+		button[type="submit"] {
+			height: 40px;
+			padding: 0 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: #4285f4;
+			color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			cursor: pointer;
+		}
+
+		button[type="submit"]:hover {
+			background-color: #357ae8;
+		}
+
+		@media screen and (max-width: 768px) {
+			input[type="search"], select[name="field"], select[name="flag"], button[type="submit"] {
+				flex: 1 1 100%;
+				margin-bottom: 10px;
+				border-radius: 5px;
+			}
+
+			select[name="field"], select[name="flag"] {
+				border-radius: 5px;
+			}
+		}
+		#voice-input-button {
+		  height: 40px;
+			padding: 0 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: #4285f4;
+			color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			cursor: pointer;
+		}
+
+		#voice-input-button:hover {
+		  background-color: #b31439;
+		}
+		#view-history-btn {
+		  position: absolute;
+		  top: 10px;
+		  left: 10px;
+		  padding: 10px 20px;
+		  font-size: 16px;
+		  font-weight: bold;
+		  color: white;
+		  background-color: #4CAF50;
+		  border: none;
+		  border-radius: 5px;
+		  cursor: pointer;
+		  transition: background-color 0.3s ease;
+		}
+
+		#search-input-button {
+		  height: 40px;
+			padding: 0 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: #4285f4;
+			color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			cursor: pointer;
+		}
+
+		#search-input-button:hover {
+		  background-color: #b31439;
+		}
+
+		#go-incognito-btn {
+		  position: absolute;
+		  top: 10px;
+		  left: 150px;
+		  padding: 10px 20px;
+		  font-size: 16px;
+		  font-weight: bold;
+		  color: white;
+		  background-color: #696969;
+		  border: none;
+		  border-radius: 5px;
+		  cursor: pointer;
+		  transition: background-color 0.3s ease;
+		}
+
+		#view-history-btn:hover {
+		  background-color: #3e8e41;
+		}
+
+		#hide-history-btn {
+		  position: absolute;
+		  top: 10px;
+		  left: 10px;
+		  padding: 10px 20px;
+		  font-size: 16px;
+		  font-weight: bold;
+		  color: white;
+		  background-color: #4CAF50;
+		  border: none;
+		  border-radius: 5px;
+		  cursor: pointer;
+		  transition: background-color 0.3s ease;
+		}
+
+		#hide-history-btn:hover {
+		  background-color: #3e8e41;
+		}
+
+		table {
+		  width: 50%;
+		  border-collapse: collapse;
+		}
+
+		td, th {
+		  padding: 5px;
+		  text-align: left;
+		  font-size: 14px;
+		}
+
+		select[name="incognitoFlag"] {
+		  display: none;
+		}
+	</style>
+</head>
+<body>
+<h1>
+    <span style="color: #1f58b5;">G</span>
+    <span style="color: #b31439;">o</span>
+    <span style="color: #dbd24d;">o</span>
+    <span style="color: #1f58b5;">g</span>
+    <span style="color: #2b7316;">l</span>
+    <span style="color: #b31439;">e</span>
+</h1>
+<div class="container">
+    <form action="/search" method="GET">
+        <input type="search" placeholder="Search" aria-label="Search" name="query" id="search-input">&nbsp;&nbsp;
+        <select name="field">
+            <option value="title">Title</option>
+            <option value="artist">Artist</option>
+            <option value="lyrics">Lyrics</option>
+        </select>&nbsp;&nbsp;&nbsp;
+        <select name="booleanFlag">
+            <option value="0">NONE</option>
+            <option value="1">AND</option>
+            <option value="2">OR</option>
+        </select>&nbsp;&nbsp;
+        <select name="sortFlag">
+            <option value="false">GROUP BY: score</option>
+            <option value="true">GROUP BY: title words</option>
+        </select><br><br>
+        <select name="mlFlag">
+            <option value="false">Use normal retrieval</option>
+            <option value="true">Use semantic retrieval</option>
+        </select>
+        <select name="incognitoFlag">
+            <option value="false"> </option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="submit" id="search-input-button">Search</button>&nbsp;&nbsp;
+        <button type="button" id="voice-input-button">Speak</button>
+    </form>
+</div>
+<button id="view-history-btn">View History</button>
+<a th:href="@{/incognito}" id="go-incognito-btn">Go Incognito</a><br><br>
+<div id="search-history" style="display: none;">
+    <table class="table table-bordered table-striped">
+        <thead style="background-color: #52ab6a;">
+        <tr>
+            <th style="color: #fff;">Before this number of searches</th>
+            <th style="color: #fff;">You searched for</th>
+            <th style="color: #fff;">Top suggestion title</th>
+            <th style="color: #fff;">You might also like</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <!-- Check if students list is empty -->
+        <th:block th:if="${#lists.isEmpty(searches)}">
+            <tr>
+                <td colspan="2" th:text="'Empty History.'"></td>
+            </tr>
+        </th:block>
+        <th:block th:unless="${#lists.isEmpty(searches)}">
+            <tr th:each="tempSearch : ${searches}">
+                <td th:text="${tempSearch.slot}"/>
+                <td th:text="${tempSearch.sentence}" id="current-search" onclick="handleCellClick()" style="cursor: pointer;"/>
+                <td th:text="${tempSearch.topSong}" id="current-top" onclick="handleCellClickTop()" style="cursor: pointer;"/>
+                <td th:text="${tempSearch.suggestion}" id="current-suggestion"></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+    <button id="hide-history-btn">Hide History</button>
+</div>
+
+<script>
+      if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        const searchInput = document.getElementById('search-input');
+        const voiceButton = document.getElementById('voice-input-button');
+
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+        recognition.lang = 'en-US';
+
+        voiceButton.addEventListener('click', () => {
+          recognition.start();
+        });
+
+        recognition.addEventListener('result', (event) => {
+          const text = event.results[0][0].transcript;
+          searchInput.value = text;
+        });
+      } else {
+        console.log('Speech recognition is not supported by this browser.');
+      }
+
+      const viewHistoryBtn = document.getElementById('view-history-btn');
+      const hideHistoryBtn = document.getElementById('hide-history-btn');
+      const searchHistory = document.getElementById('search-history');
+      const currentSearch = document.getElementById('current-search');
+      const currentTop = document.getElementById('current-top');
+      const searchInput = document.getElementById('search-input');
+
+      viewHistoryBtn.addEventListener('click', () => {
+          searchHistory.style.display = 'block';
+      });
+
+      hideHistoryBtn.addEventListener('click', () => {
+          searchHistory.style.display = 'none';
+      });
+
+      function handleCellClick() {
+    	  const clickedCell = event.target;
+    	  const slotCell = clickedCell.closest('tr').querySelector('#current-search');
+    	  const searchValue = slotCell.textContent;
+    	  searchInput.value = searchValue;
+    	}
+
+      function handleCellClickTop() {
+    	  const clickedCell = event.target;
+    	  const slotCell = clickedCell.closest('tr').querySelector('#current-top');
+    	  const searchValue = slotCell.textContent;
+    	  searchInput.value = searchValue;
+    	}
+    </script>
+</body>
+</html>

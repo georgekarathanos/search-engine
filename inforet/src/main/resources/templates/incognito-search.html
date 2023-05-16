@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Google</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #5c5c5c;
+		}
+
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+		}
+
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 30px;
+		}
+
+		form {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
+		input[type="search"] {
+			flex: 1 1 60%;
+			height: 40px;
+			padding: 0 10px;
+			border: none;
+			border-radius: 5px 0 0 5px;
+			background-color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+		}
+
+		select[name="field"], select[name="booleanFlag"], select[name="sortFlag"], select[name="mlFlag"] {
+			flex: 1 1 auto;
+			height: 40px;
+			padding: 0 10px;
+			border: none;
+			border-radius: 0 5px 5px 0;
+			background-color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+		}
+
+		button[type="submit"] {
+			height: 40px;
+			padding: 0 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: #4285f4;
+			color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			cursor: pointer;
+		}
+
+		button[type="submit"]:hover {
+			background-color: #357ae8;
+		}
+
+		@media screen and (max-width: 768px) {
+			input[type="search"], select[name="field"], select[name="flag"], button[type="submit"] {
+				flex: 1 1 100%;
+				margin-bottom: 10px;
+				border-radius: 5px;
+			}
+
+			select[name="field"], select[name="flag"] {
+				border-radius: 5px;
+			}
+		}
+		#voice-input-button {
+		  height: 40px;
+			padding: 0 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: #6a755e;
+			color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			cursor: pointer;
+		}
+
+		#voice-input-button:hover {
+		  background-color: #b31439;
+		}
+
+		#search-input-button {
+		  height: 40px;
+			padding: 0 20px;
+			border: none;
+			border-radius: 5px;
+			background-color: #6a755e;
+			color: #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			cursor: pointer;
+		}
+
+		#search-input-button:hover {
+		  background-color: #b31439;
+		}
+
+		#go-google-btn {
+		  position: absolute;
+		  top: 10px;
+		  left: 50px;
+		  padding: 10px 20px;
+		  font-size: 16px;
+		  font-weight: bold;
+		  color: white;
+		  background-color: #6a755e;
+		  border: none;
+		  border-radius: 5px;
+		  cursor: pointer;
+		  transition: background-color 0.3s ease;
+		}
+
+		select[name="incognitoFlag"] {
+		  display: none;
+		}
+	</style>
+</head>
+<body>
+<h1>
+    <span style="color: white;">G</span>
+    <span style="color: white;">o</span>
+    <span style="color: white;">o</span>
+    <span style="color: white;">g</span>
+    <span style="color: white;">l</span>
+    <span style="color: white;">e</span>
+</h1>
+<div class="container">
+    <form action="/search" method="GET">
+        <input type="search" placeholder="Search" aria-label="Search" name="query" id="search-input">&nbsp;&nbsp;
+        <select name="field">
+            <option value="title">Title</option>
+            <option value="artist">Artist</option>
+            <option value="lyrics">Lyrics</option>
+        </select>&nbsp;&nbsp;
+        <select name="booleanFlag">
+            <option value="0">NONE</option>
+            <option value="1">AND</option>
+            <option value="2">OR</option>
+        </select>&nbsp;&nbsp;
+        <select name="sortFlag">
+            <option value="false">GROUP BY: score</option>
+            <option value="true">GROUP BY: title words</option>
+        </select><br><br>
+        <select name="mlFlag">
+            <option value="false">Use normal retrieval</option>
+            <option value="true">Use semantic retrieval</option>
+        </select>
+        <select name="incognitoFlag">
+            <option value="true"> </option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="submit" id="search-input-button">Search</button>&nbsp;&nbsp;
+        <button type="button" id="voice-input-button">Speak</button>
+    </form>
+</div>
+<a th:href="@{/index}" id="go-google-btn">Go Google</a><br><br>
+<script>
+      if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        const searchInput = document.getElementById('search-input');
+        const voiceButton = document.getElementById('voice-input-button');
+
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+        recognition.lang = 'en-US';
+
+        voiceButton.addEventListener('click', () => {
+          recognition.start();
+        });
+
+        recognition.addEventListener('result', (event) => {
+          const text = event.results[0][0].transcript;
+          searchInput.value = text;
+        });
+      } else {
+        console.log('Speech recognition is not supported by this browser.');
+      }
+
+    </script>
+</body>
+</html>
