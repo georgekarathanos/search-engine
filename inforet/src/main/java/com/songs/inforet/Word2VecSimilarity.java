@@ -17,7 +17,7 @@ public class Word2VecSimilarity {
     private Map<String, INDArray> wordVectors = new HashMap<>();
 
     private static final int shape_num = 50;
-    private static final String filePath = "C:\\Users\\giorg\\Documents\\cse uoi\\8th semester\\Information Retrieval\\Project\\model\\filtered_model.txt";
+    private static final String filePath = "your_path_to_the_pretrained_model.txt";
 
     public Word2VecSimilarity(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));

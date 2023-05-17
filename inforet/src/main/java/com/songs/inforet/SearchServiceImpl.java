@@ -53,7 +53,7 @@ public class SearchServiceImpl implements SearchService{
 
     private static String suggestion = "";
 
-    private static final String filePath = "C:\\Users\\giorg\\Documents\\cse uoi\\8th semester\\Information Retrieval\\Project\\model\\filtered_model.txt";
+    private static final String filePath = "your_path_to_the_pretrained_model.txt";
 
     @Autowired
     private SearchDAO searchRepository;
@@ -253,9 +253,12 @@ public class SearchServiceImpl implements SearchService{
     }
 
 
+    //EXECUTE THIS MAIN FUNCTION WITH OUT THE COMMENTS TO CREATE THE INDEX.
+    //this is the first thing you should do before
+    //after that you can run the application with out having to initialize the index again.
     public static void main(String args[]) {
         //SearchServiceImpl service = new SearchServiceImpl();
-        //service.initializeIndex("C:\\Users\\giorg\\Documents\\cse uoi\\8th semester\\Information Retrieval\\Project\\Code\\songSearcher\\songSearcher\\src\\main\\resources\\DDL\\songs.csv");
+        //service.initializeIndex("your_path_to_songs.csv"); //GIVE THE PATH for recourses/DDL/songs.csv
         //service.searchSongs("love girl", "title", 1);
         System.out.println("Done");
     }
