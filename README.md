@@ -1,5 +1,5 @@
 # Information Retrieval
-Song Search Engine App
+Song Search Engine App - Navigate the InformationRetrievalReport.pdf which is a short explanation of the system with pictures (greek language)
 
 
 #### About this app
