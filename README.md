@@ -1,5 +1,7 @@
 # Information Retrieval
 Song Search Engine App - Navigate the InformationRetrievalReport.pdf which is a short explanation of the system with pictures (greek language)
+Some screenshots of this web application can be found inside the InformationRetrievalReport.pdf
+
 
 
 #### About this app
